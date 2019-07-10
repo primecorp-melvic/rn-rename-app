@@ -26,6 +26,7 @@ const replaceOptions = {
 
 function readFile(filePath) {
   return new Promise((resolve, reject) => {
+    console.log('readFile filePath', filePath);
     fs.readFile(filePath, (err, data) => {
       if (err) reject(err);
       resolve(data);
@@ -87,7 +88,7 @@ readFile(path.join(__dirname, 'android/app/src/main/res/values/strings.xml'))
         const bundleID = program.bundleID ? program.bundleID.toLowerCase() : null;
         let newBundlePath;
         const listOfFoldersAndFiles = foldersAndFiles(currentAppName, newName);
-        const listOfFilesToModifyContent = filesToModifyContent(currentAppName, newName, projectName);
+        const listOfFilesToModifyContent = filesToModifyContent(currentAppName, newName);
 
         if (bundleID) {
           newBundlePath = bundleID.replace(/\./g, '/');
@@ -177,6 +178,8 @@ readFile(path.join(__dirname, 'android/app/src/main/res/values/strings.xml'))
               const javaFileBase = '/android/app/src/main/java';
               const newJavaPath = `${javaFileBase}/${newBundleID.replace(/\./g, '/')}`;
               const currentJavaPath = `${javaFileBase}/${currentBundleID.replace(/\./g, '/')}`;
+              console.log('newJavaPath', newJavaPath);
+              console.log('currentJavaPath', currentJavaPath);
 
               if (bundleID) {
                 newBundlePath = newJavaPath;
