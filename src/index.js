@@ -155,6 +155,7 @@ readFile(path.join(__dirname, 'android/app/src/main/res/values/strings.xml'))
 
                 setTimeout(() => {
                   itemsProcessed++;
+                  console.log(path.join(__dirname, filePath));
                   if (fs.existsSync(path.join(__dirname, filePath))) {
                     newPaths.push(path.join(__dirname, filePath));
                     replaceContent(file.regex, file.replacement, newPaths);
@@ -186,6 +187,8 @@ readFile(path.join(__dirname, 'android/app/src/main/res/values/strings.xml'))
 
               const fullCurrentBundlePath = path.join(__dirname, currentJavaPath);
               const fullNewBundlePath = path.join(__dirname, newBundlePath);
+              console.log('fullCurrentBundlePath', fullCurrentBundlePath);
+              console.log('fullNewBundlePath', fullNewBundlePath);
 
               // Create new bundle folder if doesn't exist yet
               if (!fs.existsSync(fullNewBundlePath)) {
@@ -222,33 +225,28 @@ readFile(path.join(__dirname, 'android/app/src/main/res/values/strings.xml'))
             let filePathsCount = 0;
             const { currentBundleID, newBundleID, newBundlePath, javaFileBase, currentJavaPath, newJavaPath } = params;
 
-            bundleIdentifiers(
-              currentAppName,
-              newName,
-              projectName,
-              currentBundleID,
-              newBundleID,
-              newBundlePath
-            ).map(file => {
-              filePathsCount += file.paths.length - 1;
-              let itemsProcessed = 0;
+            bundleIdentifiers(currentAppName, newName, projectName, currentBundleID, newBundleID, newBundlePath).map(
+              file => {
+                filePathsCount += file.paths.length - 1;
+                let itemsProcessed = 0;
 
-              file.paths.map((filePath, index) => {
-                const newPaths = [];
-                if (fs.existsSync(path.join(__dirname, filePath))) {
-                  newPaths.push(path.join(__dirname, filePath));
+                file.paths.map((filePath, index) => {
+                  const newPaths = [];
+                  if (fs.existsSync(path.join(__dirname, filePath))) {
+                    newPaths.push(path.join(__dirname, filePath));
 
-                  setTimeout(() => {
-                    itemsProcessed += index;
-                    replaceContent(file.regex, file.replacement, newPaths);
-                    if (itemsProcessed === filePathsCount) {
-                      const oldBundleNameDir = path.join(__dirname, javaFileBase, currentBundleID);
-                      resolve({ oldBundleNameDir, shouldDelete: currentJavaPath !== newJavaPath });
-                    }
-                  }, 200 * index);
-                }
-              });
-            });
+                    setTimeout(() => {
+                      itemsProcessed += index;
+                      replaceContent(file.regex, file.replacement, newPaths);
+                      if (itemsProcessed === filePathsCount) {
+                        const oldBundleNameDir = path.join(__dirname, javaFileBase, currentBundleID);
+                        resolve({ oldBundleNameDir, shouldDelete: currentJavaPath !== newJavaPath });
+                      }
+                    }, 200 * index);
+                  }
+                });
+              }
+            );
           });
 
         const rename = () => {
