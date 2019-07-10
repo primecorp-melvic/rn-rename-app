@@ -187,8 +187,8 @@ readFile(path.join(__dirname, 'android/app/src/main/res/values/strings.xml'))
 
               const fullCurrentBundlePath = path.join(__dirname, currentJavaPath);
               const fullNewBundlePath = path.join(__dirname, newBundlePath);
-              console.log('fullCurrentBundlePath', fullCurrentBundlePath);
-              console.log('fullNewBundlePath', fullNewBundlePath);
+              console.log('resolveJavaFiles fullCurrentBundlePath', fullCurrentBundlePath);
+              console.log('resolveJavaFiles fullNewBundlePath', fullNewBundlePath);
 
               // Create new bundle folder if doesn't exist yet
               if (!fs.existsSync(fullNewBundlePath)) {
@@ -224,6 +224,12 @@ readFile(path.join(__dirname, 'android/app/src/main/res/values/strings.xml'))
           new Promise(resolve => {
             let filePathsCount = 0;
             const { currentBundleID, newBundleID, newBundlePath, javaFileBase, currentJavaPath, newJavaPath } = params;
+            console.log('resolveBundleIdentifiers currentBundleID', currentBundleID);
+            console.log('resolveBundleIdentifiers newBundleID', newBundleID);
+            console.log('resolveBundleIdentifiers newBundlePath', newBundlePath);
+            console.log('resolveBundleIdentifiers javaFileBase', javaFileBase);
+            console.log('resolveBundleIdentifiers currentJavaPath', currentJavaPath);
+            console.log('resolveBundleIdentifiers newJavaPath', newJavaPath);
 
             bundleIdentifiers(currentAppName, newName, projectName, currentBundleID, newBundleID, newBundlePath).map(
               file => {
@@ -232,6 +238,7 @@ readFile(path.join(__dirname, 'android/app/src/main/res/values/strings.xml'))
 
                 file.paths.map((filePath, index) => {
                   const newPaths = [];
+                  console.log('filePath', path.join(__dirname, filePath));
                   if (fs.existsSync(path.join(__dirname, filePath))) {
                     newPaths.push(path.join(__dirname, filePath));
 
