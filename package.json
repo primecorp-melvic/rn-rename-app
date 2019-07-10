@@ -1,6 +1,6 @@
 {
-  "name": "react-native-rename",
-  "version": "2.4.1",
+  "name": "rn-native-rename",
+  "version": "1.0.0",
   "description": "Rename react-native app with just one command",
   "main": "lib/index.js",
   "scripts": {
@@ -70,5 +70,8 @@
     "husky": "^0.14.3",
     "lint-staged": "^4.3.0",
     "prettier": "^1.7.4"
+  },
+  "directories": {
+    "lib": "lib"
   }
 }
