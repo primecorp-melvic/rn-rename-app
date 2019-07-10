@@ -88,7 +88,9 @@ readFile(path.join(__dirname, 'android/app/src/main/res/values/strings.xml'))
         const bundleID = program.bundleID ? program.bundleID.toLowerCase() : null;
         let newBundlePath;
         const listOfFoldersAndFiles = foldersAndFiles(currentAppName, newName);
+        console.log(listOfFoldersAndFiles);
         const listOfFilesToModifyContent = filesToModifyContent(currentAppName, newName);
+        console.log(listOfFilesToModifyContent);
 
         if (bundleID) {
           newBundlePath = bundleID.replace(/\./g, '/');
